@@ -1,0 +1,21 @@
+version: "3"
+services:
+  onionize:
+    image: torservers/onionize
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - faraday
+  nginx:
+    image: nginx:latest
+    environment:
+      - ONIONSERVICE_NAME=app
+    networks:
+      - faraday
+    volumes:
+      - ./share:/usr/share
+volumes:
+  nginx:
+networks:
+  faraday:
+    driver: bridge
